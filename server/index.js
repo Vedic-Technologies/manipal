@@ -1,24 +1,19 @@
 const express = require("express")
-const mongoose = require('mongoose');
 const app = express()
+const { logReqRes } = require("./middlewares")
 const userRouter = require("./routes/user")
+const { connectMongoDb } = require("./connection.js")
 const dotenv = require('dotenv');
 dotenv.config();
+const PORT = process.env.PORT
+const URI = process.env.URI
 
-const PORT=process.env.PORT
-const URI=process.env.URI
+// Connection
+connectMongoDb(URI)
 
-
-mongoose.connect(URI)
-  .then(() => {
-    console.log('Connected to MongoDB Atlas');
-    // Your code to interact with MongoDB goes here
-  })
-  .catch((err) => {
-    console.error('Error connecting to MongoDB Atlas:', err);
-  });
-
-
+// MIDDLEWARE - plugin
+app.use(express.urlencoded({ extended: false }))
+app.use(logReqRes("log.txt"))
 
 //ROUTES
 app.use("/api/users", userRouter);
