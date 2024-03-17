@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema(
         },
         jobTitle: {
             type: String,
+            
         },
         gender: {
             type: String,

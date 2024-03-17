@@ -12,7 +12,7 @@ const URI = process.env.URI
 connectMongoDb(URI)
 
 // MIDDLEWARE - plugin
-app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
 app.use(logReqRes("log.txt"))
 
 //ROUTES
