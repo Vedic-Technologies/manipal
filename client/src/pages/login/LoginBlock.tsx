@@ -59,7 +59,7 @@ const user_body : User=
         const response = await axios.post(
           'http://localhost:8000/api/users/login',user_body
         );
-        console.log(response.data.userType)
+        // console.log(response.data.userType)
         if(response.data.userType!=="admin" && response.data.userType!=="staff")
         {
           console.log("first layer")
