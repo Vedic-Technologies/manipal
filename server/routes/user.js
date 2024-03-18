@@ -12,8 +12,14 @@ const router = express.Router();
 
 router.route("/")
     .get(GetAllUsers)
+
+router.route("/signup")
     .post(CreateNewUser)
-   
+
+router.route("/login")
+    .post(ValidateUserLogin)
+
+
 router
     .route("/:id")
     .get(GetUserById)
