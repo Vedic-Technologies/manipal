@@ -4,10 +4,11 @@ const { logReqRes } = require("./middlewares")
 const userRouter = require("./routes/user")
 const { connectMongoDb } = require("./connection.js")
 const dotenv = require('dotenv');
+const cors = require('cors');
 dotenv.config();
 const PORT = process.env.PORT
 const URI = process.env.URI
-
+app.use(cors());
 // Connection
 connectMongoDb(URI)
 

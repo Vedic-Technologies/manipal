@@ -1,15 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 // import { Link } from "react-router-dom";
-
-
-
-
+import axios from "axios";
 
 const LoginBlock = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [emailerror, setEmailerror] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [emailerror, setEmailerror] = useState<String | null>(null);
 
   const [apiData, setApiData] = useState([]);
   const [passVisibility, setPassVisibility] = useState(false);
@@ -21,87 +18,99 @@ const LoginBlock = () => {
 
   const passRef = useRef(null);
   const visiblePassword = () => {
-    passRef.current.type = "text";
+    // passRef.current.type = "text";
     setPassVisibility((prev) => !prev);
   };
+
 
   const nonVisiblePassword = () => {
-    passRef.current.type = "password";
+    // passRef.current.type = "password";
     setPassVisibility((prev) => !prev);
   };
+ type User = {
+  email: string;
+  password: string
+}
 
-  // const verifyLogin = async () => {
+const user_body : User=
+{
+  "email": email,
+  "password": password
+}
 
-  //   if (password.length < 8) {
-  //     setError("password too short must be greater than 7 characters");
-  //   }
-  //   else if (password.length > 30) {
-  //     setError("password too long must be less than 31 characters");
-  //   }
-  //   else if (!(email.endsWith("@gmail.com"))) {
-  //     setEmailerror("invalid email")
-  //   }
+  
+  const verifyLogin = async () => {
 
-  //   else {
+    if (password.length < 8) {
+      setError("password too short must be greater than 7 characters");
+    }
+    else if (password.length > 30) {
+      setError("password too long must be less than 31 characters");
+    }
+    else if (!(email.endsWith("@gmail.com"))) {
+      setEmailerror("invalid email")
+    }
 
-  //     try {
-  //       setLoder(true);
+    else {
+
+      try {
+        setLoder(true);
        
-  //       const response = await axios.get(
-  //         `https://worldtestapi.azurewebsites.net/api/User/ValidateUser?username=${email}&password=${encodeURIComponent(password)}`
-  //       );
-  //       console.log(response.data.userType)
-  //       if(response.data.userType!=="admin" && response.data.userType!=="staff")
-  //       {
-  //         console.log("first layer")
-  //           if(response.data.isvalid===false)
-  //       {
-  //         console.log("second layer")
-  //         setError("Invalid username or passwordd");
-  //         return;
-  //       }        
-  //       }
+        const response = await axios.post(
+          'http://localhost:8000/api/users/login',user_body
+        );
+        console.log(response.data.userType)
+        if(response.data.userType!=="admin" && response.data.userType!=="staff")
+        {
+          console.log("first layer")
+            if(response.data.isvalid===false)
+        {
+          console.log("second layer")
+          setError("Invalid username or passwordd");
+          return;
+        }        
+        }
       
-  //       console.log(response.data)
-  //       setApiData(response.data);
-  //       setLoginUserInfo(response.data)
-  //       localStorage.setItem("currentUser",JSON.stringify(response.data))
-  //       setError(null);
-  //       const expiryDate = new Date();
-  //       expiryDate.setDate(expiryDate.getDate() + 15); // 15 days from now
-  //       if (response.data.userType === "student") {
-  //         setCookie('userType', "student", { expires: expiryDate });
-  //         setLoginStatus("student")
-  //         navigate("/testlandingpage");
-  //       } else if (response.data.userType === "staff") {
-  //         setCookie('userType', "staff", { expires: expiryDate })
-  //         setLoginStatus("staff")
-  //         navigate("/cpanellanding")
-  //       }else if (response.data.userType === "admin") {
-  //         setCookie('userType', "admin", { expires: expiryDate })
-  //         setLoginStatus("admin")
-  //         navigate("/cpanellanding")
-  //       }
-  //     } catch (error) {
-  //       setLoder(false);
-  //       setError("Invalid username or password please check");
-  //       console.log(error);
-  //       setServerError("Server is not online. Please try latter");
-  //     }
-  //   }
-  // };
+        console.log(response.data)
+        setApiData(response.data);
+        // setLoginUserInfo(response.data)
+        localStorage.setItem("currentUser",JSON.stringify(response.data))
+        setError(null);
+        const expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + 15); // 15 days from now
+        if (response.data.userType === "student") {
+          // setCookie('userType', "student", { expires: expiryDate });
+          // setLoginStatus("student")
+          // navigate("/testlandingpage");
+        } else if (response.data.userType === "staff") {
+          // setCookie('userType', "staff", { expires: expiryDate })
+          // setLoginStatus("staff")
+          // navigate("/cpanellanding")
+        }else if (response.data.userType === "admin") {
+          // setCookie('userType', "admin", { expires: expiryDate })
+          // setLoginStatus("admin")
+          // navigate("/cpanellanding")
+        }
+      } catch (error) {
+        setLoder(false);
+        setError("Invalid username or password please check");
+        console.log(error);
+        setServerError("Server is not online. Please try latter");
+      }
+    }
+  };
 
   return (
-    <div className=" relative login_container">
-      <div className="mt-10 text-6xl text-red-500">Manipal</div>
-      <div className="">Physiotherapy Center</div>
-      <div className="login_title mb-2 mt-3 center ">Let's access your account</div>
-      <div className="detail_line text-lg center">
+    <div className=" relative login_container ">
+     <div className=" flex flex-col items-center justify-center  w-full mt-32 ml-10">
+      <div className="mt-10 text-6xl tracking-widest font-semibold text-[#0B819B]">Manipal</div>
+      <div className="mt-3 text-xl font-bold text-gray-600">Physiotherapy Clinic Management App</div>    
+      <div className="detail_line text-lg center mt-10">
         Please enter you email & password correctly
       </div>
-
-      <div className="mt-8 ">
-        <div className="mb-6 w-[90%] m-auto">
+</div>
+      <div className="mt-8 flex flex-col items-center justify-center  w-full ml-10">
+        <div className="mb-6  m-auto">
           <label
             htmlFor="email"
             className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
@@ -111,7 +120,7 @@ const LoginBlock = () => {
           <input
             type="email"
             id="email"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3 px-3 py-[6px]"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[350px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3 px-3 py-[6px]"
             placeholder="Enter email address"
             required
             value={email}
@@ -122,7 +131,7 @@ const LoginBlock = () => {
           </div>
         </div>
 
-        <div className="mb-6  w-[90%] m-auto">
+        <div className="mb-6  m-auto">
           <label
             htmlFor="password"
             className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
@@ -136,7 +145,7 @@ const LoginBlock = () => {
               ref={passRef}
               value={password}
               onChange={(e) => { setPassword(e.target.value); setError(null); }}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3 px-3 py-[6px]"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[350px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3 px-3 py-[6px]"
               placeholder="Enter your password"
               required
             />
@@ -169,8 +178,8 @@ const LoginBlock = () => {
         className="flex flex-col items-center w-full"
 
       >
-        {!loder ? (<button onClick={() =>{}}
-          className="bg-[#50A150] pt-1 pb-2 px-10 text-white font-sans tracking-tight mb-3 rounded-[30px] text-lg"
+        {!loder ? (<button onClick={() =>{verifyLogin()}}
+          className="bg-[#095A77] pt-1 pb-2 px-10 ml-10 text-white font-sans tracking-tight mb-3 rounded-[30px] text-lg"
           style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }}
         >
           Log in

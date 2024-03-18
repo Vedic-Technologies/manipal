@@ -45,10 +45,34 @@ async function CreateNewUser(req, res) {
   return res.status(201).json({ msg: "success", id: result._id });
 }
 
+
+async function ValidateUserLogin(req, res) {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required" });
+  }
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  // Add logic to compare hashed passwords here
+  // For simplicity, let's assume plain text comparison for now
+  if (user.password !== password) {
+    return res.status(401).json({ error: "Invalid credentials" });
+  }
+
+   return res.json({ message: "Login successful", userId: user._id });
+}
+
 module.exports = {
   GetAllUsers,
   GetUserById,
   UpdateUserById,
   deleteUserById,
   CreateNewUser,
+  ValidateUserLogin
 };

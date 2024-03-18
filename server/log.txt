@@ -111,3 +111,17 @@
  
  1710662190905: ::1 GET: /api/users 
  
+ 1710670769103: ::1 GET: /api/users 
+ 
+ 1710704864849: ::1 GET: /api/users 
+ 
+ 1710762459720: ::1 GET: /api/users 
+ 
+ 1710762459819: ::1 GET: /favicon.ico 
+ 
+ 1710762498981: ::1 OPTIONS: /api/users 
+ 
+ 1710762589255: ::1 POST: /api/users 
+ 
+ 1710779849991: ::1 POST: /api/users/login 
+ 
