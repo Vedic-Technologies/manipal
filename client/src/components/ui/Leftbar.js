@@ -5,7 +5,7 @@ import "./leftbar.css";
 import { FcServices } from "react-icons/fc";
 import { FaHome } from "react-icons/fa";
 import { FcPortraitMode } from "react-icons/fc";
-import { FcInspection,FcAddressBook } from "react-icons/fc";
+import { FcInspection, FcAddressBook } from "react-icons/fc";
 import { FcMultipleInputs } from "react-icons/fc";
 import { FcUnlock } from "react-icons/fc";
 import { FaUserPen } from "react-icons/fa6";
@@ -73,14 +73,19 @@ const Leftbar = ({ children }) => {
           <ul>
             <NavLink to="/" className='link'>
               <li>
-                <FaHome className="text-orange-500" />
-                <div className={hidden} >Home</div>
+                <FaHome className=" text-orange-500" />
+                <div className={hidden} ><div>
+                  <button data-tooltip-target="tooltip-right" data-tooltip-placement="right" type="button" className=" focus:ring-4 focus:outline-none focus:ring-blue-300  px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Home</button>
+                  <div id="tooltip-right" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    Click To Go To The Home
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                  </div></div></div>
               </li>
             </NavLink>
 
             <NavLink
               to="."
-              className={`link ${activeLink === "." ? "active-link" : ""}  ${ (activeLink === "default" ) && "active-link"  }` }
+              className={`link ${activeLink === "." ? "active-link" : ""}  ${(activeLink === "default") && "active-link"}`}
               onClick={() => handleLinkClick(".")}
             >  <li>
                 <FcServices />
