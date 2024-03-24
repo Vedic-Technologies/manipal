@@ -12,6 +12,8 @@ import { FaUserPen } from "react-icons/fa6";
 import { RxDoubleArrowLeft } from "react-icons/rx";
 import { RxDoubleArrowRight } from "react-icons/rx";
 import { IoIosPaper } from "react-icons/io";
+import { Tooltip, Button } from "flowbite-react"
+
 // import { useCookies } from "react-cookie";
 // import { useLoginContext } from "../Contexts/LoginContext/LoginContext";
 
@@ -68,18 +70,13 @@ const Leftbar = ({ children }) => {
               )}
 
           </div>
-
-
           <ul>
             <NavLink to="/" className='link'>
               <li>
-                <FaHome className=" text-orange-500" />
-                <div className={hidden} ><div>
-                  <button data-tooltip-target="tooltip-right" data-tooltip-placement="right" type="button" className=" focus:ring-4 focus:outline-none focus:ring-blue-300  px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Home</button>
-                  <div id="tooltip-right" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    Click To Go To The Home
-                    <div class="tooltip-arrow" data-popper-arrow></div>
-                  </div></div></div>
+                <FaHome className="text-orange-500" />
+                <div className={hidden} > <Tooltip content="Home">
+                  <Button className=" text-black">Home</Button>
+                </Tooltip></div>
               </li>
             </NavLink>
 
@@ -89,7 +86,9 @@ const Leftbar = ({ children }) => {
               onClick={() => handleLinkClick(".")}
             >  <li>
                 <FcServices />
-                <div className={hidden} >Profile</div>
+                <div className={hidden} > <Tooltip content="Profile">
+                  <Button className=" text-black">Profile</Button>
+                </Tooltip></div>
               </li>
             </NavLink>
 
@@ -100,7 +99,11 @@ const Leftbar = ({ children }) => {
               onClick={() => handleLinkClick("editquestions")}
             >  <li>
                 <FcPortraitMode />
-                <div className={hidden} >Edit Questions</div>
+                <div className={hidden} >
+                  <Tooltip content="Edit Questions">
+                    <Button className="text-black">Edit Questions</Button>
+                  </Tooltip>
+                </div>
               </li>
             </NavLink>
 
@@ -112,7 +115,9 @@ const Leftbar = ({ children }) => {
               onClick={() => handleLinkClick("createquestions")}
             >  <li>
                 <IoIosPaper className="text-cyan-700" />
-                <div className={hidden} >Add Questions</div>
+                <div className={hidden} > <Tooltip content="Add Question">
+                  <Button className=" text-black">Add Question</Button>
+                </Tooltip></div>
               </li>
             </NavLink>
 
@@ -122,7 +127,9 @@ const Leftbar = ({ children }) => {
               onClick={() => handleLinkClick("createtest")}
             >  <li>
                 <FcAddressBook className="text-green-700" />
-                <div className={hidden} >Add Test</div>
+                <div className={hidden} ><Tooltip content="Add Test">
+                  <Button className=" text-black">Add Test</Button>
+                </Tooltip></div>
               </li>
             </NavLink>
 
@@ -134,7 +141,9 @@ const Leftbar = ({ children }) => {
                   onClick={() => handleLinkClick("createstaff")}>
                   <li>
                     <FcInspection />
-                    <div className={hidden} >Create Staff</div>
+                    <div className={hidden} ><Tooltip content="Create Staff">
+                      <Button className=" text-black">Create Staff</Button>
+                    </Tooltip></div>
                   </li>
                 </NavLink>
 
@@ -145,7 +154,9 @@ const Leftbar = ({ children }) => {
                   onClick={() => handleLinkClick("editstaffs")}>
                   <li>
                     <FaUserPen style={{ color: 'red' }} />
-                    <div className={hidden} >Edit Staff</div>
+                    <div className={hidden} ><Tooltip content="Edit Staff">
+                      <Button className=" text-black">Edit Staff</Button>
+                    </Tooltip></div>
                   </li>
                 </NavLink>
               </>
@@ -158,8 +169,10 @@ const Leftbar = ({ children }) => {
               onClick={() => handleLinkClick("studentsummary")}
             ><li>
                 <FcMultipleInputs />
-                <div className={hidden} >Student Info</div>
-              </li></NavLink>
+                <div className={hidden} ><Tooltip content="Student Info">
+                  <Button className=" text-black">Student Info</Button>
+                </Tooltip></div>              
+                </li></NavLink>
 
 
             <div
@@ -167,7 +180,9 @@ const Leftbar = ({ children }) => {
               onClick={() => logout()}
             > <li>
                 <FcUnlock />
-                <div className={hidden} >Logout</div>
+                <div className={hidden} ><Tooltip content="Logout">
+                  <Button className=" text-black">Logout</Button>
+                </Tooltip></div>
               </li>
             </div>
 
